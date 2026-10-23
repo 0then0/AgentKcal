@@ -13,24 +13,37 @@ export interface Adapter {
 export function stem(path: string): string {
   return basename(path, extname(path));
 }
-export function files(adapter: Adapter, roots: string[]): string[] {
+export function files(
+  adapter: Adapter,
+  roots: string[],
+  onError: (path: string, error: unknown) => void = (_path, error) => {
+    throw error;
+  },
+): string[] {
   const found = new Map<string, string>();
   for (const root of roots) {
-    let stats: Stats;
+    let candidates: string[];
     try {
-      stats = statSync(root);
+      const stats: Stats = statSync(root);
+      candidates = stats.isFile()
+        ? [root]
+        : stats.isDirectory()
+          ? [...globSync([...adapter.patterns], { cwd: root })]
+              .sort()
+              .map((path) => `${root}/${path}`)
+          : [];
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code === "ENOENT") continue;
-      throw error;
+      onError(root, error);
+      continue;
     }
-    const candidates = stats.isFile()
-      ? [root]
-      : stats.isDirectory()
-        ? [...globSync([...adapter.patterns], { cwd: root })]
-            .sort()
-            .map((path) => `${root}/${path}`)
-        : [];
-    for (const path of candidates) if (statSync(path).isFile()) found.set(realpathSync(path), path);
+    for (const path of candidates) {
+      try {
+        if (statSync(path).isFile()) found.set(realpathSync(path), path);
+      } catch (error) {
+        onError(path, error);
+      }
+    }
   }
   return [...found.values()];
 }

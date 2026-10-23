@@ -71,7 +71,7 @@ Agent, event, session and model IDs must be non-empty strings up to 512 characte
 ## Identity and completeness
 
 - Ledger key: `(agent, session_id, event_id)`. Reimporting unchanged records is a no-op; later snapshots update existing records.
-- A whole file is parsed before a transaction writes its normalized events. Malformed or truncated files commit no partial prefix; retry when their writer finishes. Other valid files continue importing.
+- A whole file is parsed under the SQLite writer lock before the transaction writes its normalized events. Concurrent imports wait for that lock before reading the source. Malformed or truncated files commit no partial prefix; retry when their writer finishes. Other valid files continue importing, including when a discovered file is missing or unreadable.
 - Default roots that do not exist are normal for uninstalled agents. Missing explicit paths produce warnings; empty or unsupported files also produce warnings.
 - The ledger is append/update oriented. Removing source logs does not remove usage. There is no automatic pruning or source-snapshot reconciliation.
 - CSV exports have no reliable native request ID. AgentKcal hashes usage identity and user identity, plus an occurrence ordinal for otherwise identical rows. Repeated copies of the same export deduplicate. Overlapping exports can be ambiguous when identical rows represent distinct requests, or metadata/counters change. Cursor's `session_id` is the placeholder `cursor-csv`; it is not a real session count.

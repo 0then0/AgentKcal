@@ -79,7 +79,9 @@ export function sync(
         result.warnings.push(`${adapter.name}: source does not exist: ${root}`);
     let candidates: string[];
     try {
-      candidates = files(adapter, roots);
+      candidates = files(adapter, roots, (path, error) => {
+        result.errors.push(`${adapter.name}: ${basename(path)}: ${errorMessage(error)}`);
+      });
     } catch (error) {
       result.errors.push(`${adapter.name}: ${errorMessage(error)}`);
       continue;
@@ -87,9 +89,12 @@ export function sync(
     for (const path of candidates) {
       result.files++;
       try {
-        // Materialize the whole file before beginning the transaction.
-        const events = adapter.read(path);
-        result.changed += store.upsert(events);
+        let events: UsageEvent[] = [];
+        result.changed += store.upsert(() => {
+          // Parse under the writer lock, before writing any records.
+          events = adapter.read(path);
+          return events;
+        });
         result.records += events.length;
         if (!events.length)
           result.warnings.push(`${adapter.name}: ${basename(path)}: no supported usage records`);

@@ -41,7 +41,7 @@ Register an instance in `ADAPTERS` in `src/adapters/index.ts`. CLI choices, sour
 
 Verify whether cache/reasoning counters are subsets before normalizing them into disjoint buckets. Do not estimate tokens from characters, prices or subscription limits. Preserve stable native IDs and replace repeated streaming snapshots. Keep missing model IDs as `unknown`.
 
-The service reads each complete file before its transaction; malformed/truncated files must commit no prefix. Errors must not include source contents. Never execute source-provided commands or load plugins from an agent's private directory. Fixtures must be synthetic, without prompts, credentials, account identifiers or personal paths.
+The service acquires the SQLite writer lock before reading each complete file, then writes its normalized events in the same transaction. Keep source reading inside the `Store.upsert` callback so concurrent imports cannot overwrite newer snapshots with older ones. Malformed/truncated files must commit no prefix. Errors must not include source contents. Never execute source-provided commands or load plugins from an agent's private directory. Fixtures must be synthetic, without prompts, credentials, account identifiers or personal paths.
 
 ## Add an energy provider
 

@@ -32,7 +32,8 @@ export class Store implements Disposable {
   [Symbol.dispose](): void {
     this.close();
   }
-  upsert(events: UsageEvent[]): number {
+  /** Read mutable sources only after acquiring the writer lock across processes. */
+  upsert(events: UsageEvent[] | (() => UsageEvent[])): number {
     const select = this.db.prepare(
       "SELECT payload FROM events WHERE agent=? AND session_id=? AND event_id=?",
     );
@@ -42,7 +43,8 @@ export class Store implements Disposable {
     let changed = 0;
     this.db.exec("BEGIN IMMEDIATE");
     try {
-      for (const value of events) {
+      const incoming = typeof events === "function" ? events() : events;
+      for (const value of incoming) {
         const event = usageEvent(value);
         const previous = select.get(event.agent, event.session_id, event.event_id);
         const payload = canonical(event as unknown as Record<string, unknown>);

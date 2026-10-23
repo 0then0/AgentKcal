@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -169,4 +169,23 @@ test("Codex counter resets reject the entire file", () => {
   const path = join(folder.path, "rollout-reset.jsonl");
   writeFileSync(path, rows.map((row) => JSON.stringify(row)).join("\n"));
   assert.throws(() => ADAPTERS.get("codex")?.read(path), /counters decreased/);
+});
+
+test("a dangling discovered link does not prevent valid files from importing", () => {
+  using folder = temporary();
+  const source = join(folder.path, "sources");
+  mkdirSync(source);
+  copyFileSync(fixture("claude.jsonl"), join(source, "valid.jsonl"));
+  symlinkSync(
+    join(source, "missing"),
+    join(source, "old.jsonl"),
+    process.platform === "win32" ? "junction" : "file",
+  );
+  using store = new Store(join(folder.path, "db"));
+  const result = sync(store, DEFAULT, "claude", [source]);
+  assert.equal(result.errors.length, 1);
+  assert.match(result.errors[0] ?? "", /old\.jsonl/);
+  assert.equal(result.files, 1);
+  assert.equal(result.changed, 1);
+  assert.equal(store.events()[0]?.output_tokens, 40);
 });

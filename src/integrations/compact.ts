@@ -75,11 +75,10 @@ export function claudeStatusline(
     session = text(row.session_id, "session_id"),
     path = expandPath(text(row.transcript_path, "transcript_path"));
   if (!existsSync(path)) return `AgentKcal · ${COMPACT_MESSAGES[language].waitingTranscript}`;
-  const config = load(dataDir),
-    events = new ClaudeAdapter().read(path);
+  const config = load(dataDir);
   const store = new Store(dataDir);
   try {
-    store.upsert(events);
+    store.upsert(() => new ClaudeAdapter().read(path));
     const data = snapshot(store, config, { days: 0, agent: "claude", session });
     if (!data.totals.records) return `AgentKcal · ${COMPACT_MESSAGES[language].waitingUsage}`;
     return compact(data, language);

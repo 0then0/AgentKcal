@@ -201,3 +201,22 @@ test("totals that exceed exact JavaScript integer precision fail explicitly", ()
   store.upsert([event(large), event({ ...large, event_id: "e2" })]);
   assert.throws(() => report(store, DEFAULT, 0), /safe integer range/);
 });
+
+test("a failed source reader releases the transaction and corrected counts can decrease", () => {
+  using folder = temporary();
+  using store = new Store(folder.path);
+  store.upsert([event({ input_tokens: 100 })]);
+  assert.throws(
+    () =>
+      store.upsert(() => {
+        throw new Error("source unavailable");
+      }),
+    /source unavailable/,
+  );
+  assert.equal(store.events()[0]?.input_tokens, 100);
+  assert.equal(
+    store.upsert(() => [event({ input_tokens: 50 })]),
+    1,
+  );
+  assert.equal(store.events()[0]?.input_tokens, 50);
+});

@@ -5,8 +5,8 @@ type ControlMap = {
   language: HTMLSelectElement;
   theme: HTMLSelectElement;
   sync: HTMLButtonElement;
-  "export-json": HTMLAnchorElement;
-  "export-csv": HTMLAnchorElement;
+  "export-json": HTMLButtonElement;
+  "export-csv": HTMLButtonElement;
 };
 function $<K extends keyof ControlMap>(id: K): ControlMap[K];
 function $(id: string): HTMLElement;
@@ -43,6 +43,7 @@ let state: DashboardStatus | null = null;
 let requestNumber = 0;
 let chartRows: ChartRow[] = [];
 let summaryFailed = false;
+let summaryPending = true;
 let lastReport: DashboardReport | null = null;
 let currentNotice: { message: string | (() => string); error: boolean } | null = null;
 let syncing = false;
@@ -354,8 +355,7 @@ function render(data: DashboardReport) {
     );
     body.append(tableRow);
   }
-  for (const format of ["csv", "json"] as const)
-    $(`export-${format}`).href = `/api/export?${params()}&format=${format}`;
+  renderExports();
   $("updated").textContent = tr("Read at {time} UTC · stored locally", {
     time: new Date(data.generated_at).toLocaleTimeString(locale(), {
       timeZone: "UTC",
@@ -363,8 +363,17 @@ function render(data: DashboardReport) {
     }),
   });
 }
+function renderExports() {
+  const disabled = summaryPending || summaryFailed || !lastReport;
+  for (const format of ["csv", "json"] as const) {
+    const link = $(`export-${format}`);
+    link.disabled = disabled;
+  }
+}
 async function refresh() {
   const number = ++requestNumber;
+  summaryPending = true;
+  renderExports();
   $("content").setAttribute("aria-busy", "true");
   try {
     const data = await api<DashboardReport>(`/api/summary?${params()}`);
@@ -389,6 +398,8 @@ async function refresh() {
     summaryFailed = true;
   } finally {
     if (number === requestNumber) {
+      summaryPending = false;
+      renderExports();
       $("loading").hidden = true;
       $("content").setAttribute("aria-busy", "false");
     }
@@ -447,6 +458,13 @@ $("language").addEventListener("change", () => preferences.setLanguage($("langua
 $("theme").addEventListener("change", () => preferences.setTheme($("theme").value));
 $("food").addEventListener("change", () => preferences.setFood($("food").value));
 applyPreferences();
+renderExports();
+for (const format of ["csv", "json"] as const) {
+  const button = $(`export-${format}`);
+  button.addEventListener("click", () => {
+    if (!button.disabled) window.location.assign(`/api/export?${params()}&format=${format}`);
+  });
+}
 $("days").addEventListener("change", refresh);
 $("agent").addEventListener("change", refresh);
 window.addEventListener("resize", () => renderChart(chartRows));
