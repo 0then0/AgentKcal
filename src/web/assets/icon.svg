@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <title>AgentKcal: AI compute, energy, and a grain of perspective</title>
+  <rect width="128" height="128" rx="30" fill="#173D31" />
+  <g stroke="#A9D78D" stroke-width="4" stroke-linecap="round">
+    <path
+      d="M43 24v13m21-13v13m21-13v13M43 91v13m21-13v13m21-13v13M24 43h13M24 64h13M24 85h13M91 43h13M91 64h13M91 85h13"
+    />
+    <rect x="36" y="36" width="56" height="56" rx="12" fill="#173D31" />
+  </g>
+  <path d="m68 43-18 24h13l-4 19 22-27H67l1-16Z" fill="#E4EFC9" />
+  <ellipse
+    cx="94"
+    cy="94"
+    rx="16"
+    ry="22"
+    transform="rotate(38 94 94)"
+    fill="#E4AD64"
+    stroke="#173D31"
+    stroke-width="4"
+  />
+  <path d="m86 105 16-21" stroke="#173D31" stroke-width="3" stroke-linecap="round" />
+</svg>

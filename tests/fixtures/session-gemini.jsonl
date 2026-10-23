@@ -1,0 +1,4 @@
+{"sessionId":"gemini-session","projectHash":"example","startTime":"2026-01-02T12:00:00Z"}
+{"id":"gem-1","type":"gemini","model":"gemini-test","timestamp":"2026-01-02T12:00:00Z","tokens":{"input":1000,"cached":600,"output":100,"thoughts":80,"tool":20,"total":1200}}
+{"$patch":{"id":"gem-1","content":"PRIVATE_RESPONSE_DO_NOT_STORE"}}
+{"$rewindTo":"user-message"}

@@ -1,0 +1,1 @@
+{"sessionId":"gemini-session","messages":[{"id":"user","type":"user","content":"PRIVATE_PROMPT_DO_NOT_STORE"},{"id":"gem-1","type":"gemini","model":"gemini-test","timestamp":"2026-01-02T12:00:00Z","tokens":{"input":1000,"cached":600,"output":100,"thoughts":80,"tool":20,"total":1200}}]}

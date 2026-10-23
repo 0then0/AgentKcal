@@ -1,0 +1,15 @@
+name: Feature or adapter request
+description: Suggest a focused capability or agent format
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The use case
+      description: Describe the workflow and what's missing.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Proposed behavior and format documentation
+      description: Link official schemas where possible. Use synthetic examples without secrets.

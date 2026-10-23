@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <!-- Original, unbranded comparison illustrations. Each symbol is one portion. -->
+  <symbol id="buckwheat" viewBox="0 0 84 84">
+    <ellipse cx="42" cy="77" rx="27" ry="4" fill="#8d7862" opacity=".16" />
+    <path d="m18 12 5-6 6 6 6-6 7 6 7-6 6 6 6-6 5 6-3 60q-21 7-42 0Z" fill="#e8d5aa" />
+    <path d="M18 12h48v9H18zm3 53q21 5 42 0v7q-21 7-42 0Z" fill="#d1b47b" />
+    <rect x="26" y="28" width="32" height="31" rx="8" fill="#795039" />
+    <g fill="#c88e55">
+      <ellipse cx="34" cy="36" rx="3" ry="2" />
+      <ellipse cx="43" cy="35" rx="3" ry="2" />
+      <ellipse cx="51" cy="38" rx="3" ry="2" />
+      <ellipse cx="33" cy="44" rx="3" ry="2" />
+      <ellipse cx="43" cy="43" rx="3" ry="2" />
+      <ellipse cx="51" cy="47" rx="3" ry="2" />
+      <ellipse cx="35" cy="52" rx="3" ry="2" />
+      <ellipse cx="44" cy="51" rx="3" ry="2" />
+    </g>
+    <path d="M22 23v39" stroke="#f7e9cb" stroke-width="3" stroke-linecap="round" />
+  </symbol>
+  <symbol id="dumpling" viewBox="0 0 84 84">
+    <ellipse cx="42" cy="69" rx="33" ry="4" fill="#8d7862" opacity=".16" />
+    <path
+      d="M8 55C13 37 25 23 42 21c17 2 29 16 34 34-16 16-52 16-68 0Z"
+      fill="#f0dfb4"
+      stroke="#b99561"
+      stroke-width="2"
+    />
+    <path d="M12 53c8-14 19-24 30-26 12 2 23 12 30 26-15 12-45 12-60 0Z" fill="#fff0cf" />
+    <path
+      d="m20 38 4 9m8-20 3 12m9-15 1 12m10-7-2 12m12-3-4 9"
+      stroke="#d2af76"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+    <path d="M15 58q27 14 54 0" stroke="#e0c795" stroke-width="2" fill="none" />
+  </symbol>
+  <symbol id="bread" viewBox="0 0 84 84">
+    <ellipse cx="43" cy="76" rx="23" ry="4" fill="#8d7862" opacity=".16" />
+    <g transform="rotate(27 42 42)">
+      <rect x="26" y="5" width="33" height="72" rx="17" fill="#b96c21" />
+      <path d="M30 61V24c0-9 5-15 12-15s12 6 12 15v37c0 8-5 12-12 12s-12-4-12-12Z" fill="#dc943a" />
+      <path
+        d="m33 23 15 5m-15 9 18 6m-18 8 17 6m-15 7 11 4"
+        stroke="#f8cf80"
+        stroke-width="4"
+        stroke-linecap="round"
+      />
+    </g>
+  </symbol>
+  <symbol id="milk" viewBox="0 0 84 84">
+    <ellipse cx="43" cy="77" rx="24" ry="4" fill="#8d7862" opacity=".16" />
+    <path d="m24 23 10-16h24l8 16v49l-31 5-13-9Z" fill="#f4f1e9" />
+    <path d="m35 25 31-2v49l-31 5Z" fill="#dce6ec" />
+    <path d="m24 23 11 2v52l-13-9Z" fill="#e4e1d8" />
+    <path d="m34 7 1 18 31-2-8-16Z" fill="#e9e7df" />
+    <path d="M35 49q7-7 15 0t16-2v25l-31 5Z" fill="#4479b6" />
+    <path d="m23 46 12 5v26l-13-9Z" fill="#2c639d" />
+    <ellipse cx="46" cy="17" rx="7" ry="5" transform="rotate(-16 46 17)" fill="#4485c2" />
+    <path d="m41 57 5 10m7-13 5 10" stroke="#a4c9e4" stroke-width="3" stroke-linecap="round" />
+  </symbol>
+  <symbol id="banana" viewBox="0 0 84 84">
+    <ellipse cx="44" cy="76" rx="29" ry="4" fill="#8d7862" opacity=".16" />
+    <path
+      d="M21 15c-9 26 1 50 32 55 10 2 18-1 22-6C47 58 31 41 29 17Z"
+      fill="#efbd40"
+      stroke="#ba8c2c"
+      stroke-width="2"
+    />
+    <path d="M22 18c-1 28 15 47 47 48-23-8-36-23-40-48Z" fill="#ffe27b" />
+    <path d="M21 15 23 8l7 2-1 8Z" fill="#7c8340" />
+    <path d="m70 62 6 2-3 5-5-3Z" fill="#786044" />
+    <path
+      d="M25 24c1 19 14 33 31 38"
+      stroke="#f5cf59"
+      stroke-width="2"
+      fill="none"
+      stroke-linecap="round"
+    />
+  </symbol>
+  <symbol id="rice" viewBox="0 0 84 84">
+    <ellipse cx="42" cy="77" rx="27" ry="4" fill="#8d7862" opacity=".16" />
+    <path d="m18 12 5-6 6 6 6-6 7 6 7-6 6 6 6-6 5 6-3 60q-21 7-42 0Z" fill="#e7eadb" />
+    <path d="M18 12h48v9H18zm3 53q21 5 42 0v7q-21 7-42 0Z" fill="#bdc9a6" />
+    <rect x="26" y="28" width="32" height="31" rx="8" fill="#6b8059" />
+    <g fill="#faf4db">
+      <ellipse cx="34" cy="36" rx="2" ry="4" transform="rotate(30 34 36)" />
+      <ellipse cx="44" cy="35" rx="2" ry="4" transform="rotate(-25 44 35)" />
+      <ellipse cx="51" cy="43" rx="2" ry="4" transform="rotate(35 51 43)" />
+      <ellipse cx="34" cy="48" rx="2" ry="4" transform="rotate(-30 34 48)" />
+      <ellipse cx="44" cy="51" rx="2" ry="4" transform="rotate(25 44 51)" />
+    </g>
+    <path d="M22 23v39" stroke="#faf8eb" stroke-width="3" stroke-linecap="round" />
+  </symbol>
+  <symbol id="corn" viewBox="0 0 84 84">
+    <ellipse cx="42" cy="77" rx="24" ry="4" fill="#8d7862" opacity=".16" />
+    <path d="M25 53V27C25 13 33 6 42 6s17 7 17 21v26Z" fill="#e3ae35" />
+    <g fill="#ffda66">
+      <rect x="30" y="17" width="7" height="8" rx="3" />
+      <rect x="40" y="13" width="7" height="9" rx="3" />
+      <rect x="49" y="18" width="6" height="8" rx="3" />
+      <rect x="29" y="28" width="8" height="9" rx="3" />
+      <rect x="40" y="25" width="7" height="10" rx="3" />
+      <rect x="49" y="29" width="7" height="9" rx="3" />
+      <rect x="29" y="40" width="8" height="9" rx="3" />
+      <rect x="40" y="38" width="7" height="10" rx="3" />
+      <rect x="49" y="41" width="7" height="9" rx="3" />
+    </g>
+    <path
+      d="M42 76C23 67 13 49 14 32c15 5 24 19 28 36 4-17 13-31 28-36 1 17-9 35-28 44Z"
+      fill="#739650"
+    />
+    <path
+      d="M20 40c4 13 11 23 22 32 11-9 18-19 22-32"
+      fill="none"
+      stroke="#a8bd6b"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+  </symbol>
+  <symbol id="potato" viewBox="0 0 84 84">
+    <ellipse cx="42" cy="74" rx="29" ry="5" fill="#8d7862" opacity=".16" />
+    <path
+      d="M14 53C7 40 20 26 30 18c12-10 28-9 38 4 9 12 5 24-2 36-8 14-23 18-37 13-9-3-12-9-15-18Z"
+      fill="#c49b6d"
+      stroke="#a77d51"
+      stroke-width="2"
+    />
+    <path
+      d="M20 43c-1-9 11-22 20-24 8-2 15 0 20 5"
+      stroke="#ddbc91"
+      stroke-width="5"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <g fill="#967047">
+      <ellipse cx="29" cy="40" rx="3" ry="2" transform="rotate(-25 29 40)" />
+      <ellipse cx="52" cy="29" rx="3" ry="2" />
+      <ellipse cx="56" cy="51" rx="3" ry="2" transform="rotate(30 56 51)" />
+      <ellipse cx="36" cy="59" rx="3" ry="2" />
+    </g>
+    <g fill="#b68a5c">
+      <circle cx="44" cy="41" r="1.4" />
+      <circle cx="25" cy="54" r="1.4" />
+      <circle cx="46" cy="65" r="1.4" />
+      <circle cx="62" cy="39" r="1.4" />
+    </g>
+  </symbol>
+</svg>

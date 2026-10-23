@@ -1,0 +1,3 @@
+Date,Model,Kind,Input (w/ Cache Write),Input (w/o Cache Write),Cache Read,Output Tokens,Total Tokens,Cost
+2026-01-02T15:00:00Z,claude-test,Included,30,100,200,40,370,Included
+2026-01-02T15:01:00Z,gpt-test,Usage-based,0,100,200,40,340,0.01

@@ -1,0 +1,8 @@
+description = "Show locally recorded AI usage and estimated Wh/kcal"
+prompt = """
+Use AgentKcal get_usage with agent="gemini", days=1 and the user's language.
+Return one compact line: today's UTC tokens, approximate Wh and kcal, from the local ledger.
+Refresh with sync_usage only if the user explicitly requests fresh/current usage.
+If MCP is unavailable, run agentkcal status --agent gemini using the normal shell tool.
+Report import warnings. Energy is an illustrative scenario, not measured power or food consumed.
+"""

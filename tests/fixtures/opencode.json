@@ -1,0 +1,1 @@
+{"info":{"id":"opencode-session"},"messages":[{"info":{"id":"oc-1","role":"assistant","modelID":"local-test","time":{"created":1767358800000,"completed":1767358801000},"tokens":{"input":100,"output":40,"reasoning":20,"cache":{"read":200,"write":30}}},"parts":[{"text":"PRIVATE_RESPONSE_DO_NOT_STORE"}]}]}

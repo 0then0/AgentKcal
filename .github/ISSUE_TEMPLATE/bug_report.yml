@@ -1,0 +1,25 @@
+name: Bug report
+description: Incorrect totals, source parsing, CLI or dashboard problems
+body:
+  - type: input
+    id: version
+    attributes:
+      label: AgentKcal, Node.js and OS versions
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: What happened and how to reproduce it
+      description: Include agent version and command. Do not attach raw journals, prompts, credentials or personal paths.
+    validations:
+      required: true
+  - type: textarea
+    id: fixture
+    attributes:
+      label: Minimal synthetic or redacted usage record
+      description: For format problems, include only IDs, timestamps and usage counters. Remove conversation content and identifying metadata.
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual totals or behavior

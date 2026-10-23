@@ -1,0 +1,408 @@
+<!-- biome-ignore-all lint/a11y/noNoninteractiveTabindex: The usage table region must be keyboard scrollable. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta
+      name="description"
+      content="Your local AI usage ledger. Transparent energy scenarios and kilocalorie equivalents."
+    >
+    <title data-i18n>AgentKcal · Usage overview</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/icon.svg">
+    <script src="/preferences.js"></script>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/locales.js" defer></script>
+    <script src="/i18n.js" defer></script>
+    <script src="/foods.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main"><span data-i18n>Skip to content</span></a>
+    <aside class="sidebar" aria-label="Main navigation" data-i18n-aria-label="Main navigation">
+      <a class="brand" href="#main"
+        ><img src="/assets/icon.svg" alt="" width="39" height="39">
+        <span
+          >AgentKcal<small><span data-i18n>THE LOCAL USAGE LEDGER</span></small></span
+        ></a
+      >
+      <div class="workspace">
+        <span class="workspace-icon" aria-hidden="true">⌘</span>
+        <div>
+          <span data-i18n>Your workspace</span
+          ><small><span data-i18n>Personal · on this device</span></small>
+        </div>
+      </div>
+      <nav>
+        <span class="nav-label"><span data-i18n>WORKSPACE</span></span>
+        <a class="nav-link active" href="#main"
+          ><span aria-hidden="true">◫</span> <span data-i18n>Overview</span></a
+        >
+        <a class="nav-link" href="#adapters"
+          ><span aria-hidden="true">⊞</span> <span data-i18n>Agent adapters</span>
+          <span class="nav-count">7</span></a
+        >
+        <a class="nav-link" href="#methodology"
+          ><span aria-hidden="true">≋</span> <span data-i18n>Methodology</span></a
+        >
+      </nav>
+      <div class="sidebar-note">
+        <span class="note-symbol" aria-hidden="true">↳</span
+        ><strong><span data-i18n>A little perspective.</span></strong>
+        <p><span data-i18n>Tokens are abstract. Energy gives them another dimension.</span></p>
+        <a href="#methodology"
+          ><span data-i18n>Understand the estimate</span> <span aria-hidden="true">↗</span></a
+        >
+      </div>
+      <div class="local-state">
+        <span class="status-dot"></span>
+        <div>
+          <span data-i18n>Everything stays here</span
+          ><small><span data-i18n>Local SQLite · no telemetry</span></small>
+        </div>
+      </div>
+      <span class="version">AgentKcal / v0.1.0 · Apache-2.0</span>
+    </aside>
+
+    <div class="shell">
+      <header class="topbar">
+        <span
+          ><span data-i18n>Workspace</span> <span class="breadcrumb">/</span>
+          <strong><span data-i18n>Overview</span></strong></span
+        >
+        <div class="preferences">
+          <label class="sr-only" for="language" data-i18n>Language</label
+          ><select id="language">
+            <option value="en" lang="en">English</option>
+            <option value="ru" lang="ru">Русский</option>
+            <option value="es" lang="es">Español</option>
+            <option value="de" lang="de">Deutsch</option>
+            <option value="fr" lang="fr">Français</option>
+            <option value="ja" lang="ja">日本語</option>
+            <option value="pt-BR" lang="pt-BR">Português (Brasil)</option>
+          </select><label class="sr-only" for="theme" data-i18n>Theme</label
+          ><select id="theme">
+            <option value="system" data-i18n>System</option>
+            <option value="light" data-i18n>Light</option>
+            <option value="dark" data-i18n>Dark</option>
+          </select>
+        </div>
+        <div class="topbar-right">
+          <span id="demo-badge" class="demo-badge" hidden
+            ><span data-i18n>SYNTHETIC DEMO</span></span
+          ><span class="local-badge"
+            ><span class="status-dot"></span> <span data-i18n>Local only</span></span
+          >
+        </div>
+      </header>
+      <main id="main" tabindex="-1">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow"><span data-i18n>AWARENESS, ONE REQUEST AT A TIME</span></p>
+            <h1><span data-i18n>Usage overview</span><span class="heading-dot">.</span></h1>
+            <p class="subtitle">
+              <span data-i18n>A clearer picture of what your AI agents consume.</span>
+            </p>
+          </div>
+          <button type="button" id="sync" class="button primary">
+            <span aria-hidden="true">↻</span> <span data-i18n>Sync local logs</span>
+          </button>
+        </div>
+        <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+        <div class="toolbar">
+          <div class="filters">
+            <label class="sr-only" for="days"><span data-i18n>Time period</span></label
+            ><select id="days">
+              <option value="7" data-i18n>Last 7 days</option>
+              <option value="30" selected data-i18n>Last 30 days</option>
+              <option value="90" data-i18n>Last 90 days</option>
+              <option value="0" data-i18n>All time</option>
+            </select><label class="sr-only" for="agent"><span data-i18n>Agent</span></label
+            ><select id="agent">
+              <option value="" data-i18n>All agents</option>
+            </select><span class="timezone"><span data-i18n>UTC calendar days</span></span>
+          </div>
+          <div class="export-actions">
+            <span><span data-i18n>Export</span></span
+            ><a id="export-csv" class="button small" href="/api/export?format=csv"
+              >CSV <span aria-hidden="true">↓</span></a
+            ><a id="export-json" class="button small" href="/api/export?format=json"
+              >JSON <span aria-hidden="true">↓</span></a
+            >
+          </div>
+        </div>
+
+        <div id="loading" class="loading" role="status">
+          <span data-i18n>Reading your local ledger…</span>
+        </div>
+        <div id="content" hidden>
+          <section class="metrics" aria-label="Usage summary" data-i18n-aria-label="Usage summary">
+            <article class="metric">
+              <div class="metric-label">
+                <span data-i18n>Tokens consumed</span>
+                <span class="metric-symbol" aria-hidden="true">◎</span>
+              </div>
+              <div class="metric-number" id="tokens">0</div>
+              <p>
+                <span id="record-count">0</span>
+                <span id="record-label" data-i18n>usage records</span>
+                <span class="muted"><span data-i18n>· input, output &amp; cache</span></span>
+              </p>
+              <div class="metric-bottom">
+                <span class="mini-tag"><span data-i18n>REPORTED USAGE</span></span
+                ><span id="cache-share"><span data-i18n>0% cached input</span></span>
+              </div>
+            </article>
+            <article class="metric">
+              <div class="metric-label">
+                <span data-i18n>Estimated energy</span>
+                <span class="metric-symbol" aria-hidden="true">ϟ</span>
+              </div>
+              <div class="metric-number">
+                <span id="wh">0</span><span class="unit"><span data-i18n>Wh</span></span>
+              </div>
+              <p>
+                <span data-i18n>Scenario range</span>
+                <strong id="range"><span data-i18n>0–0 Wh</span></strong>
+              </p>
+              <div class="metric-bottom">
+                <span class="mini-tag"><span data-i18n>SCENARIO</span></span
+                ><span><span data-i18n>Includes PUE</span> <span id="pue">1.2</span></span>
+              </div>
+            </article>
+            <article class="metric kcal-card">
+              <div class="metric-label">
+                <span data-i18n>Energy equivalent</span>
+                <img src="/assets/icon.svg" alt="" width="30" height="30">
+              </div>
+              <div class="metric-number">
+                <span id="kcal">0</span><span class="unit"><span data-i18n>kcal</span></span>
+              </div>
+              <p><span data-i18n>The same energy, in a more familiar unit.</span></p>
+              <div class="metric-bottom">
+                <span class="mini-tag"><span data-i18n>A DIFFERENT PERSPECTIVE</span></span
+                ><span><span data-i18n>1 kcal = 4,184 J</span></span>
+              </div>
+            </article>
+          </section>
+          <div class="estimate-note">
+            <span aria-hidden="true">ⓘ</span>
+            <p>
+              <strong><span data-i18n>Perspective, not a power meter.</span></strong>
+              <span id="scenario-label"
+                ><span data-i18n>Illustrative scenario · not a measurement</span></span
+              ><span data-i18n>. kcal expresses energy, not food consumed or calories burned.</span>
+            </p>
+            <a href="#methodology"
+              ><span data-i18n>How it works</span> <span aria-hidden="true">↗</span></a
+            >
+          </div>
+
+          <section class="panel food-panel" aria-labelledby="food-title">
+            <div class="food-heading">
+              <div>
+                <h2 id="food-title" data-i18n>Energy in familiar foods</h2>
+                <p id="food-period"></p>
+              </div>
+              <div class="food-picker">
+                <label for="food" data-i18n>Compare with</label><select id="food"></select>
+              </div>
+            </div>
+            <div class="food-body">
+              <div class="food-value">
+                <span class="mini-tag" data-i18n>THIS IS APPROXIMATELY</span>
+                <div id="food-quantity" class="food-number">0</div>
+                <p id="food-units"></p>
+              </div>
+              <div class="food-visual">
+                <div id="food-icons" class="food-icons" aria-hidden="true"></div>
+                <span id="food-extra" class="food-extra" aria-hidden="true" hidden></span>
+                <p id="food-visual-caption"></p>
+              </div>
+              <div class="food-next">
+                <span data-i18n>Fraction of the next portion</span
+                ><strong id="food-percent">0%</strong>
+                <div
+                  id="food-progress"
+                  class="food-progress"
+                  role="progressbar"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="0"
+                  aria-label="Fraction of the next portion"
+                  data-i18n-aria-label="Fraction of the next portion"
+                >
+                  <div id="food-progress-fill"></div>
+                </div>
+              </div>
+            </div>
+            <div class="food-basis"><span id="food-basis"></span><span id="food-range"></span></div>
+            <div class="food-footnote">
+              <span data-i18n
+                >Energy comparison only. Portion sizes and food calories are approximate.</span
+              ><a href="#methodology" data-i18n>How it works</a>
+            </div>
+          </section>
+
+          <div class="analysis-grid">
+            <section class="panel chart-panel" aria-labelledby="activity-title">
+              <div class="panel-heading">
+                <div>
+                  <h2 id="activity-title"><span data-i18n>Daily energy</span></h2>
+                  <p id="chart-caption"><span data-i18n>Estimated watt-hours over time</span></p>
+                </div>
+                <span class="chart-legend"><i></i> <span data-i18n>Energy scenario</span></span>
+              </div>
+              <div id="chart" class="chart"></div>
+              <div class="chart-footer">
+                <span><span data-i18n>Energy estimate · Wh</span></span
+                ><span id="chart-period"></span>
+              </div>
+            </section>
+            <section class="panel" aria-labelledby="agent-title">
+              <div class="panel-heading">
+                <div>
+                  <h2 id="agent-title"><span data-i18n>By agent</span></h2>
+                  <p><span data-i18n>Share of estimated energy</span></p>
+                </div>
+                <span class="panel-count" id="agent-count">0</span>
+              </div>
+              <div id="agent-breakdown" class="agent-breakdown"></div>
+              <div class="panel-footer">
+                <span data-i18n>One ledger. Different ways to build.</span>
+              </div>
+            </section>
+          </div>
+
+          <section class="panel ledger" aria-labelledby="ledger-title">
+            <div class="panel-heading">
+              <div>
+                <h2 id="ledger-title"><span data-i18n>Recent usage</span></h2>
+                <p><span data-i18n>Normalized records from your connected agents</span></p>
+              </div>
+              <span class="mini-tag" id="ledger-count"><span data-i18n>LATEST 100 MAX</span></span>
+            </div>
+            <div id="empty" class="empty" hidden>
+              <span class="empty-icon" aria-hidden="true">↳</span>
+              <h3><span data-i18n>Your ledger starts here.</span></h3>
+              <p>
+                <span data-i18n
+                  >No usage records in this view. Sync local logs, select another period, or import
+                  an export through the CLI.</span
+                >
+              </p>
+              <code>agentkcal sync</code>
+            </div>
+            <section
+              class="table-scroll"
+              id="records-wrap"
+              tabindex="0"
+              aria-label="Recent usage, scroll horizontally for all columns"
+              data-i18n-aria-label="Recent usage, scroll horizontally for all columns"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col"><span data-i18n>Agent / model</span></th>
+                    <th scope="col"><span data-i18n>Recorded at · UTC</span></th>
+                    <th scope="col" class="numeric"><span data-i18n>Tokens</span></th>
+                    <th scope="col" class="numeric"><span data-i18n>Energy · Wh</span></th>
+                    <th scope="col" class="numeric"><span data-i18n>Equivalent · kcal</span></th>
+                  </tr>
+                </thead>
+                <tbody id="records"></tbody>
+              </table>
+            </section>
+          </section>
+        </div>
+
+        <section class="panel adapters" id="adapters" aria-labelledby="adapters-title">
+          <div class="panel-heading">
+            <div>
+              <h2 id="adapters-title"><span data-i18n>Agent adapters</span></h2>
+              <p>
+                <span data-i18n>Local logs where available. Explicit imports where needed.</span>
+              </p>
+            </div>
+            <span class="mini-tag"><span data-i18n>EXTENSIBLE BY DESIGN</span></span>
+          </div>
+          <div id="adapter-list" class="adapter-list"></div>
+          <div class="adapter-help">
+            <code>agentkcal agents</code
+            ><span
+              ><span data-i18n>Inspect source paths. Configure additional paths in</span>
+              <code>config.json</code>.</span
+            >
+          </div>
+        </section>
+
+        <details class="methodology" id="methodology">
+          <summary>
+            <span
+              ><span aria-hidden="true">≋</span>
+              <span data-i18n>The math behind the estimate</span></span
+            ><span class="detail-hint"
+              ><span data-i18n>Coefficients, compute &amp; limitations</span>
+              <span aria-hidden="true">+</span></span
+            >
+          </summary>
+          <div class="method-body">
+            <div>
+              <h3><span data-i18n>From usage to energy</span></h3>
+              <p>
+                <span data-i18n
+                  >Each token bucket has its own Wh per million tokens. We multiply the sum by PUE,
+                  the data center overhead factor. Model patterns select a configurable profile;
+                  otherwise the explicit fallback applies.</span
+                >
+              </p>
+              <code>Wh = PUE × Σ(tokens × Wh_per_million / 1,000,000)</code>
+              <p>
+                <span data-i18n
+                  >With GPU telemetry, GPU seconds × supplied watts / 3,600 replaces the token
+                  calculation. Wall-clock request latency is never treated as GPU time.</span
+                >
+              </p>
+            </div>
+            <div>
+              <h3><span data-i18n>Know what the numbers mean</span></h3>
+              <p>
+                <span data-i18n
+                  >Default coefficients are illustrative assumptions, not measured model benchmarks.
+                  The low/high range is a sensitivity scenario, not a statistical confidence
+                  interval. Real energy depends on hardware, batching, model, context and
+                  infrastructure.</span
+                >
+              </p>
+              <p>
+                <span data-i18n
+                  >Training, embodied energy, network traffic and your device are excluded.
+                  Kilocalories are a physical energy conversion:</span
+                > <strong>kcal = Wh × 3,600 / 4,184</strong>.
+              </p>
+              <p data-i18n>
+                Food equivalents divide the same estimated kcal by the energy in a stated portion.
+                These are visual comparisons, not food consumed.
+              </p>
+              <p>
+                <span data-i18n>Edit</span> <code>energy</code> <span data-i18n>in your local</span>
+                <code>config.json</code>
+                <span data-i18n
+                  >to calibrate profiles. Estimates are recalculated from the original token
+                  counts.</span
+                >
+              </p>
+            </div>
+          </div>
+        </details>
+        <footer class="page-footer">
+          <span
+            ><img src="/assets/icon.svg" alt="" width="20" height="20">
+            <span data-i18n>Make the invisible a little more visible.</span></span
+          ><span id="updated"><span data-i18n>Stored on your device</span></span>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

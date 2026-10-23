@@ -1,0 +1,1 @@
+[{"type":"say","say":"api_req_started","ts":1767362400000,"text":"{\"request\":\"PRIVATE_PROMPT_DO_NOT_STORE\",\"tokensIn\":100,\"tokensOut\":40,\"cacheWrites\":30,\"cacheReads\":200}"},{"type":"say","say":"api_req_finished","ts":1767362401000,"text":"{\"tokensIn\":100,\"tokensOut\":40}"}]
